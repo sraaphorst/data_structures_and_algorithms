@@ -1,0 +1,2 @@
+add_subdirectory(week1_programming_challenges)
+add_subdirectory(week2_algorithmic_warmup)

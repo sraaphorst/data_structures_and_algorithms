@@ -1,0 +1,6 @@
+add_executable(fibonacci_partial_sum fibonacci_partial_sum.cpp)
+target_compile_definitions(fibonacci_partial_sum PUBLIC -Dtesting=0)
+
+add_executable(test_fibonacci_partial_sum ${TEST_SOURCES} test_fibonacci_partial_sum.cpp fibonacci_partial_sum.cpp)
+target_compile_definitions(test_fibonacci_partial_sum PUBLIC -Dtesting=1)
+target_link_libraries(test_fibonacci_partial_sum Catch)

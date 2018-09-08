@@ -1,0 +1,2 @@
+add_subdirectory(1_sum_of_two_digits)
+add_subdirectory(2_maximum_pairwise_product)

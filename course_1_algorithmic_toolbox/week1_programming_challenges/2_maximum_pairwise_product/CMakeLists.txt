@@ -1,0 +1,5 @@
+add_executable(max_pairwise_product max_pairwise_product.cpp)
+
+add_executable(test_max_pairwise_product ${TEST_SOURCES} test_max_pairwise_product.cpp max_pairwise_product.cpp)
+target_compile_definitions(test_max_pairwise_product PUBLIC -Dtesting=1)
+target_link_libraries(test_max_pairwise_product Catch)

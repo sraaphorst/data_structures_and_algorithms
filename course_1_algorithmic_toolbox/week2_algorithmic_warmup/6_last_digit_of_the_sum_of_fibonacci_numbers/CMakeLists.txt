@@ -1,0 +1,5 @@
+add_executable(fibonacci_sum_last_digit fibonacci_sum_last_digit.cpp)
+
+add_executable(test_fibonacci_sum_last_digit ${TEST_SOURCES} test_fibonacci_sum_last_digit.cpp fibonacci_sum_last_digit.cpp)
+target_compile_definitions(test_fibonacci_sum_last_digit PUBLIC -Dtesting=1)
+target_link_libraries(test_fibonacci_sum_last_digit Catch)

@@ -1,0 +1,7 @@
+add_subdirectory(1_fibonacci_number)
+add_subdirectory(2_last_digit_of_fibonacci_number)
+add_subdirectory(3_greatest_common_divisor)
+add_subdirectory(4_least_common_multiple)
+add_subdirectory(5_fibonacci_number_again)
+add_subdirectory(6_last_digit_of_the_sum_of_fibonacci_numbers)
+add_subdirectory(7_last_digit_of_the_sum_of_fibonacci_numbers_again)
