@@ -1,0 +1,3 @@
+add_subdirectory(1_binary_search)
+add_subdirectory(2_majority_element)
+add_subdirectory(3_improving_quicksort)

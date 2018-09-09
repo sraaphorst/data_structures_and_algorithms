@@ -4,20 +4,20 @@
 #include <iterator>
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 using std::vector;
 using std::string;
 
-string largest_number(vector<string> a) {
-    std::sort(std::begin(a), std::end(a), [](auto a, auto b) { return a.front() > b.front(); });
+string largest_number(vector<string> as) {
+    std::sort(std::begin(as), std::end(as), [&as](auto a, auto b) {
+        return a + b > b + a;
+    });
 
     std::stringstream ret;
-    for (size_t i = 0; i < a.size(); i++) {
-        ret << a[i];
-    }
-    string result;
-    ret >> result;
-    return result;
+    for (const auto &elem : as)
+        ret << elem;
+    return ret.str();
 }
 
 int main() {

@@ -1,3 +1,4 @@
 add_subdirectory(week1_programming_challenges)
 add_subdirectory(week2_algorithmic_warmup)
 add_subdirectory(week3_greedy_algorithms)
+add_subdirectory(week4_divide_and_conquer)
