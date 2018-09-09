@@ -1,10 +1,20 @@
 # Uses python3
 import sys
 
+
 def optimal_summands(n):
-    summands = []
-    #write your code here
+    if not n:
+        return []
+
+    summands = [1]
+    n = n - 1
+
+    while n > summands[-1]:
+        summands.append(summands[-1] + 1)
+        n = n - summands[-1]
+    summands[-1] = summands[-1] + n
     return summands
+
 
 if __name__ == '__main__':
     input = sys.stdin.read()
