@@ -21,8 +21,6 @@ def minimum_distance(x, y):
 
         # Base case: 2 points.
         if len(points) == 2:
-            p, q = points
-            print("p=({},{}), q=({},{}), dist={}".format(p[0], p[1], q[0], q[1], distance(p, q)))
             return distance(points[0], points[1])
 
         # Corner case: all points have the same x coordinate.
@@ -30,16 +28,12 @@ def minimum_distance(x, y):
         # Then the distance is the minimum distance between the already sorted ys.
         if points[0][0] == points[-1][0]:
             # Find the y values closest together.
-            distances = map(lambda p: p[1][1] - p[0][1], zip(points, points[1::]))
-            #dist, p, q = min([(lambda p: p[1][1] - p[0][1],p,q) for p,q in zip(points, points[1::])])
-            #print("p=({},{}), q=({},{}), dist={}".format(p[0], p[1], q[0], q[1], dist))
-            #return min(distances)
-            return min(distances)
+            return map(lambda p: p[1][1] - p[0][1], zip(points, points[1::]))
 
         # Regular case: we have points on both sides. Try to draw a line through n/2 of them.
         # Note that if a lot of them are on this line, then the sizes will be very unequal.
         # We shove all points on the line to the left if the size of the left is smaller than the size of the right.
-        #line = sum(map(lambda p: p[0], points))/2
+        # line = sum(map(lambda p: p[0], points))/2
         line = points[len(points)//2][0]
         left_points = list(takewhile(lambda p: p[0] < line, points))
         line_points = list(takewhile(lambda p: p[0] == line, points[len(left_points)::]))
@@ -55,16 +49,14 @@ def minimum_distance(x, y):
 
         # Calculate the distances, provided there are any.
         if len(left_in_bounds) > 0 and len(right_in_bounds) > 0:
-            le = enumerate(sorted(left_in_bounds, key=lambda p: p[1]))
-            re = enumerate(sorted(right_in_bounds, key=lambda q: q[1]))
-            #d3, p3, q3 = min([(distance(p, q), p, q) for i,p in le for j,q in re])
-            d3, p3, q3 = min([(distance(p, q), p, q) for i,p in enumerate(left_in_bounds) for j,q in enumerate(right_in_bounds) if math.fabs((i - j) <= 7)])
-            #d3,p3,q3 = min([(distance(p, q),p,q) for i,p in le for j,q in re])# if math.fabs(i - j) <= 7])
-            print("***1: p=({},{}), q=({},{}), dist={}".format(p3[0], p3[1], q3[0], q3[1], d3))
-            d2, p2, q2 = min([(distance(p, q), p, q) for p in left_in_bounds for q in right_in_bounds])
-            print("***2: p=({},{}), q=({},{}), dist={}".format(p2[0], p2[1], q2[0], q2[1], d2))
-            assert(d3 == d2 and p3 == p2 and q3 == q2)
-            return min(d1, d2)
+            # We can do away with this sort if we keep an index in the sorted by x points to their position in the
+            # list sorted by y. Then when taking the left_in_bound and right_in_bound points above, we use the index
+            # to get the points from the sorted by y list.
+            # Thus, sorted_by_x((x,y),idx) => sorted_by_y(idx).
+            d2 = min([distance(p, q)
+                      for i,p in enumerate(sorted(left_in_bounds, key=lambda p: p[1]))
+                      for j,q in enumerate(sorted(right_in_bounds, key=lambda p: p[1])))
+                     #if math.fabs((i - j) <= 7)])
             return min(d1, d2)
         else:
             return d1
@@ -74,11 +66,12 @@ def minimum_distance(x, y):
     points.sort()
     return aux(points)
 
+
 def brute_force(xs, ys):
     points = list(zip(xs, ys))
     dist, p, q = min([(distance(p, q), p, q) for i,p in enumerate(points) for j,q in enumerate(points) if i != j])
-    print("Brute force: p=({},{}), q=({},{}), dist={}".format(p[0], p[1], q[0], q[1], dist))
     return dist
+
 
 class TestClosest(unittest.TestCase):
     def test1(self):
@@ -86,17 +79,17 @@ class TestClosest(unittest.TestCase):
         ys = [4, -2, -4,  3,  3,  0, 1, -1, -1,  2,  4]
         self.assertEqual(minimum_distance(xs, ys), math.sqrt(2))
     def test_random(self):
-        num_points = randrange(2, 10**1)
-        xs = [randrange(-10**1, 10**1) for _ in range(num_points)]
-        ys = [randrange(-10**1, 10**1) for _ in range(num_points)]
+        num_points = randrange(2, 10**3)
+        xs = [randrange(-10**9, 10**9) for _ in range(num_points)]
+        ys = [randrange(-10**9, 10**9) for _ in range(num_points)]
         self.assertEqual(minimum_distance(xs, ys), brute_force(xs, ys))
 
 
 if __name__ == '__main__':
-    unittest.main()
-    # input = sys.stdin.read()
-    # data = list(map(int, input.split()))
-    # n = data[0]
-    # x = data[1::2]
-    # y = data[2::2]
-    # print("{0:.9f}".format(minimum_distance(x, y)))
+    # unittest.main()
+    input = sys.stdin.read()
+    data = list(map(int, input.split()))
+    n = data[0]
+    x = data[1::2]
+    y = data[2::2]
+    print("{0:.9f}".format(minimum_distance(x, y)))
