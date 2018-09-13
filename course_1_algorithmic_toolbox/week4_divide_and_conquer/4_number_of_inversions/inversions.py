@@ -1,18 +1,34 @@
 # Uses python3
 import sys
 
-def get_number_of_inversions(a, b, left, right):
-    number_of_inversions = 0
-    if right - left <= 1:
-        return number_of_inversions
-    ave = (left + right) // 2
-    number_of_inversions += get_number_of_inversions(a, b, left, ave)
-    number_of_inversions += get_number_of_inversions(a, b, ave, right)
-    #write your code here
-    return number_of_inversions
+
+def merge(b, c):
+    result = []
+    inversions = 0
+    while b and c:
+        if b[0] <= c[0]:
+            result.append(b.pop(0))
+        else:
+            result.append(c.pop(0))
+            inversions += len(b)
+    result += b or c
+    return result, inversions
+
+
+def inversions(a):
+    if len(a) == 1:
+        return a, 0
+
+    mid = len(a) // 2
+    lft, lft_inv = inversions(a[:mid])
+    rgt, rgt_inv = inversions(a[mid:])
+
+    merged, merged_inv = merge(lft, rgt)
+    return merged, merged_inv + lft_inv + rgt_inv
+
 
 if __name__ == '__main__':
     input = sys.stdin.read()
     n, *a = list(map(int, input.split()))
     b = n * [0]
-    print(get_number_of_inversions(a, b, 0, len(a)))
+    print(inversions(a)[1])

@@ -13,58 +13,66 @@ def distance(p, q):
 
 
 def minimum_distance(x, y):
-    def aux(points):
+    # Duplicate points indicate that the answer is immediately 0.
+    test = zip(x, y)
+    if len(set(test)) < len(list(test)):
+        return 0
+
+    # Sort the xs, and the ys, and then make a map from x to y such that xtoymap(x[0]) gives the index of the
+    # corresponding point in y.
+    xs = list(map(lambda u: (u[0], u[1][0]), sorted(enumerate(zip(x, y)), key=lambda u: (u[1][0], u[1][1]))))
+    ys = sorted(enumerate(y), key=lambda u: (u[1], u[0]))
+    xtoymap = [j for x in xs for j in range(len(ys)) if x[0] == ys[j][0]]
+
+    # We keep track of what xs we are looking at: [rangelower, rangeupper).
+    def aux(rangelower, rangeupper):
+        def indexed_distance(i, j):
+            return distance((xs[rangelower+i][1], ys[xtoymap[rangelower+i]][1]),
+                            (xs[rangelower+j][1], ys[xtoymap[rangelower+j]][1]))
+
+        # This will come up frequently, so calculate it here once.
+        size = rangeupper - rangelower
+
         # Base case: 0 or 1 points.
         # It makes no sense to calculate a distance here, so return largest possible.
-        if len(points) <= 1:
+        if size <= 1:
             return sys.maxsize
 
         # Base case: 2 points.
-        if len(points) == 2:
-            return distance(points[0], points[1])
+        if size == 2:
+            return indexed_distance(0,1)
 
         # Corner case: all points have the same x coordinate.
         # Since the points are sorted, we only need to check the first and last.
         # Then the distance is the minimum distance between the already sorted ys.
-        if points[0][0] == points[-1][0]:
+        if xs[rangelower+0][1] == xs[rangeupper-1][1]:
             # Find the y values closest together.
-            return map(lambda p: p[1][1] - p[0][1], zip(points, points[1::]))
+            return min([ys[xtoymap[i]][1] - ys[xtoymap[i+1]][1] for i in range(rangelower, rangeupper)])
 
-        # Regular case: we have points on both sides. Try to draw a line through n/2 of them.
-        # Note that if a lot of them are on this line, then the sizes will be very unequal.
-        # We shove all points on the line to the left if the size of the left is smaller than the size of the right.
-        # line = sum(map(lambda p: p[0], points))/2
-        line = points[len(points)//2][0]
-        left_points = list(takewhile(lambda p: p[0] < line, points))
-        line_points = list(takewhile(lambda p: p[0] == line, points[len(left_points)::]))
-        if len(left_points) < len(points) - len(left_points) - len(line_points):
-            left_points.extend(line_points)
-        right_points = points[len(left_points)::]
-        d1 = min(aux(left_points), aux(right_points))
+        # Regular case: we have points on both sides. Draw a line through n/2 of them.
+        # It doesn't matter if some on the line end up in the left half or the right half.
+        line = size//2 + rangelower + size % 2
+        d1 = min(aux(rangelower, line), aux(line, rangeupper))
 
-        # Now calculate the distance between the points in left_points and right_points.
-        # Filter distance from the line and make sure points have distance at most d.
-        left_in_bounds = list(dropwhile(lambda p: line - p[0] >= d1, left_points))
-        right_in_bounds = list(takewhile(lambda p: p[0] - line <= d1, right_points))
+        # Now calculate the range of the points within distance d of the line between the two sets.
+        # This will consist of the interval [rangelower + d_lower, rangelower + d_upper).
+        d_lower = len(list(dropwhile(lambda u: xs[line][1] - xs[u][1] > d1, range(rangelower, line))))
+        d_upper = len(list(takewhile(lambda u: xs[u][1] - xs[line][1] <= d1, range(line, rangeupper)))) + 1
+
+        # Determine the calculations that need to be done for proximity to the line between the left side and
+        # the right side.
+        calcs = [(i, j)
+                 for i in range(line - d_lower - rangelower, line - rangelower)
+                 for j in range(line - rangelower, min(i + 8, line + d_upper - rangelower - 1))]
 
         # Calculate the distances, provided there are any.
-        if len(left_in_bounds) > 0 and len(right_in_bounds) > 0:
-            # We can do away with this sort if we keep an index in the sorted by x points to their position in the
-            # list sorted by y. Then when taking the left_in_bound and right_in_bound points above, we use the index
-            # to get the points from the sorted by y list.
-            # Thus, sorted_by_x((x,y),idx) => sorted_by_y(idx).
-            d2 = min([distance(p, q)
-                      for i,p in enumerate(sorted(left_in_bounds, key=lambda p: p[1]))
-                      for j,q in enumerate(sorted(right_in_bounds, key=lambda p: p[1])))
-                     #if math.fabs((i - j) <= 7)])
+        if len(calcs) > 0:
+            d2 = min(indexed_distance(i, j) for i, j in calcs)
             return min(d1, d2)
         else:
             return d1
 
-    points = list(zip(x, y))
-    # We also want the ys sorted, but as an index into the xs.
-    points.sort()
-    return aux(points)
+    return aux(0, len(xs))
 
 
 def brute_force(xs, ys):
