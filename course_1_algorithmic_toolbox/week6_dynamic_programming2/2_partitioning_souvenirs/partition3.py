@@ -1,4 +1,12 @@
 # Uses python3
+
+# partition3.py
+#
+# By Sebastian Raaphorst, 2018.
+#
+# Given a multiset of items identified by value, determine if it is possible to find a three-set multipartition of
+# the multiset so that each multipartition class has the same value, i.e. the sum of all values divided by three.
+
 import sys
 import itertools
 import unittest
