@@ -1,4 +1,4 @@
-# Data Structures and Algorithm Course:
+# Data Structures and Algorithms Course:
 
 https://www.coursera.org/specializations/data-structures-algorithms
 
