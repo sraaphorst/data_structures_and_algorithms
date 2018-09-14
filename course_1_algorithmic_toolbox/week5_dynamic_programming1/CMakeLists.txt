@@ -1,0 +1,2 @@
+add_subdirectory(2_primitive_calculator)
+add_subdirectory(5_longest_common_subsequence_of_three_sequences)

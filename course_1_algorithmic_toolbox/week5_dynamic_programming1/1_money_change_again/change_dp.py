@@ -1,7 +1,15 @@
 # Uses python3
+
+# change_dp.py
+#
+# By Sebastian Raaphorst, 2018.
+#
+# Given a value and a list of denominations of coins, find the minimal number of coins needed to make that value.
+# I implement a recursive and dynamic programming strategy.
+
 import sys
 
-# Problem: determine the minimum number of ways to make currency m out of coins of denominations 4, 3, and 1.
+
 def get_change(m):
     # Technique 1: recursion.
     # The problem with recursion is that we are limited to m being the permitted stack depth.
@@ -41,8 +49,9 @@ def get_change(m):
 
         return array_m[m]
 
-    #return rec(m, [4, 3, 1])
+    # return rec(m, [4, 3, 1])
     return dp(m, [4, 3, 1])
+
 
 if __name__ == '__main__':
     m = int(sys.stdin.read())

@@ -78,6 +78,7 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+venv/
 
 # Other:
 .DS_Store

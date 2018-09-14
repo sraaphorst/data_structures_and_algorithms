@@ -1,0 +1,1 @@
+add_executable(primitive_calculator primitive_calculator.cpp)
