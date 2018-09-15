@@ -9,3 +9,7 @@ Note that the Python scripts require, to be graded properly, a comment:
 `#Uses Python3`
 
 instead of the usual shebang.
+
+* Course 1, Algorithmic Toolbox complete:
+
+https://www.coursera.org/account/accomplishments/certificate/2XRP4Y9U2NF8
