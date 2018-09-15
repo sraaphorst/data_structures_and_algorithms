@@ -10,3 +10,4 @@ enable_testing(true)
 add_subdirectory(test)
 
 add_subdirectory(course_1_algorithmic_toolbox)
+add_subdirectory(course_2_data_structures)

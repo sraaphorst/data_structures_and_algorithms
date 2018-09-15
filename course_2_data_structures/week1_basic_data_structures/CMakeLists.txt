@@ -1,0 +1,3 @@
+add_subdirectory(check_brackets_in_code)
+add_subdirectory(tree_height)
+add_subdirectory(network_packet_processing_simulation)

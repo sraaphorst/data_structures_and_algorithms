@@ -1,79 +1,69 @@
+/**
+ * tree-height.cpp
+ *
+ * By Sebastian Raaphorst, 2018.
+ *
+ * Non-recursive, queue-based algorithm to determine the height of an arbitrary tree.
+ */
+
 #include <algorithm>
 #include <iostream>
+#include <queue>
+#include <tuple>
 #include <vector>
-#if defined(__unix__) || defined(__APPLE__)
-#include <sys/resource.h>
-#endif
 
-class Node;
-
-class Node {
+class Node final {
 public:
-    int key;
+    size_t key;
     Node *parent;
-    std::vector<Node *> children;
+    std::vector<Node*> children;
 
-    Node() {
-      this->parent = NULL;
-    }
+    Node(): key{0}, parent{nullptr} {}
 
     void setParent(Node *theParent) {
-      parent = theParent;
-      parent->children.push_back(this);
+        parent = theParent;
+        parent->children.emplace_back(this);
+    }
+
+    // Get the height of the tree at this node in a non-recursive fashion.
+    size_t getHeight() const {
+        using info = std::pair<const Node*, size_t>;
+        size_t height = 0;
+
+        std::queue<info> nodes;
+        nodes.emplace(std::make_pair(this, 1));
+        while (!nodes.empty()) {
+            const auto finfo = nodes.front();
+            nodes.pop();
+
+            if (finfo.second > height)
+                height = finfo.second;
+
+            for (const auto n: finfo.first->children)
+                nodes.emplace(std::make_pair(n, finfo.second + 1));
+        }
+
+        return height;
     }
 };
 
+int main() {
+    size_t n;
+    std::cin >> n;
 
-int main_with_large_stack_space() {
-  std::ios_base::sync_with_stdio(0);
-  int n;
-  std::cin >> n;
+    // Read in the tree.
+    std::vector<Node> nodes;
+    nodes.resize(n);
 
-  std::vector<Node> nodes;
-  nodes.resize(n);
-  for (int child_index = 0; child_index < n; child_index++) {
-    int parent_index;
-    std::cin >> parent_index;
-    if (parent_index >= 0)
-      nodes[child_index].setParent(&nodes[parent_index]);
-    nodes[child_index].key = child_index;
-  }
+    for (size_t child_index = 0; child_index < n; child_index++) {
+        int parent_index;
+        std::cin >> parent_index;
+        nodes[child_index].key = child_index;
+        if (parent_index >= 0)
+            nodes[child_index].setParent(&nodes[parent_index]);
+    }
 
-  // Replace this code with a faster implementation
-  int maxHeight = 0;
-  for (int leaf_index = 0; leaf_index < n; leaf_index++) {
-    int height = 0;
-    for (Node *v = &nodes[leaf_index]; v != NULL; v = v->parent)
-      height++;
-    maxHeight = std::max(maxHeight, height);
-  }
-    
-  std::cout << maxHeight << std::endl;
-  return 0;
-}
-
-int main (int argc, char **argv)
-{
-#if defined(__unix__) || defined(__APPLE__)
-  // Allow larger stack space
-  const rlim_t kStackSize = 16 * 1024 * 1024;   // min stack size = 16 MB
-  struct rlimit rl;
-  int result;
-
-  result = getrlimit(RLIMIT_STACK, &rl);
-  if (result == 0)
-  {
-      if (rl.rlim_cur < kStackSize)
-      {
-          rl.rlim_cur = kStackSize;
-          result = setrlimit(RLIMIT_STACK, &rl);
-          if (result != 0)
-          {
-              std::cerr << "setrlimit returned result = " << result << std::endl;
-          }
-      }
-  }
-
-#endif
-  return main_with_large_stack_space();
+    // Get the root.
+    const auto iter = std::find_if(nodes.cbegin(), nodes.cend(), [](const auto &n) { return n.parent == nullptr; });
+    std::cout << ((iter != nodes.cend()) ? iter->getHeight() : 0) << '\n';
 }
