@@ -13,3 +13,7 @@ instead of the usual shebang.
 * Course 1, Algorithmic Toolbox complete:
 
 https://www.coursera.org/account/accomplishments/certificate/2XRP4Y9U2NF8
+
+* Status: working on course:
+
+https://www.coursera.org/learn/data-structures
