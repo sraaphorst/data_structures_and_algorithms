@@ -15,22 +15,22 @@ instead of the usual shebang.
 # Status
 
 1. Course 1, Algorithmic Toolbox: <b>complete</b>
-  - Course webpage: https://www.coursera.org/learn/algorithmic-toolbox
-  - Course certificate of completion: https://www.coursera.org/account/accomplishments/certificate/2XRP4Y9U2NF8
+  * Course webpage: https://www.coursera.org/learn/algorithmic-toolbox
+  * Course certificate of completion: https://www.coursera.org/account/accomplishments/certificate/2XRP4Y9U2NF8
 
-* Course 2, Data Structures: <b>in progress</b>
-  - Course webpage: https://www.coursera.org/learn/data-structures
+2 Course 2, Data Structures: <b>in progress</b>
+  * Course webpage: https://www.coursera.org/learn/data-structures
   
-* Course 3, Algorithms on Graphs
-  - Course webpage: https://www.coursera.org/learn/algorithms-on-graphs
+3 Course 3, Algorithms on Graphs
+  * Course webpage: https://www.coursera.org/learn/algorithms-on-graphs
 
-* Course 4, Algorithms on Strings
-  - Course webpage: https://www.coursera.org/learn/algorithms-on-strings
+4 Course 4, Algorithms on Strings
+  * Course webpage: https://www.coursera.org/learn/algorithms-on-strings
 
-* Course 5, Advanced Algorithms and Complexity
-  - Course webpage: https://www.coursera.org/learn/advanced-algorithms-and-complexity
+5 Course 5, Advanced Algorithms and Complexity
+  * Course webpage: https://www.coursera.org/learn/advanced-algorithms-and-complexity
 
-* Course 6, Genome Assembly Project Challenge
-  - Course webpage: https://www.coursera.org/learn/assembling-genomes
+6 Course 6, Genome Assembly Project Challenge
+  * Course webpage: https://www.coursera.org/learn/assembling-genomes
 
 
