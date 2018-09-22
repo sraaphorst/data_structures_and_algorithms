@@ -25,8 +25,9 @@ class JobQueue {
 private:
     const size_t num_workers;
 
-    // Priority queue setup. IDs are worker thread available time and then ID.
+    // Priority queue setup. Entries are pairs of worker thread available times and then IDs.
     // We want a min priority queue, so we must sort opposite to what we think.
+    // Then the top entry is always, amongst the free worker threads, the one of lowest ID.
     using thread_info = std::pair<start_time, worker_id >;
     struct Comparator {
         bool operator()(const thread_info &i1, const thread_info &i2) const {
@@ -34,15 +35,13 @@ private:
         }
     };
 
+    // Priority queue of worker threads, with priority being their available time and id.
+    std::priority_queue<thread_info, std::deque<thread_info>, Comparator> thread_queue;
+
 public:
     assignment assign(std::vector<process_time> jobs) {
         // Entry at i represents the ith job, which is the thread ID and the start time.
         std::vector<std::pair<size_t, unsigned long long>> assignments;
-
-        // Priority queue of worker threads, with priority being their available time and id.
-        std::priority_queue<thread_info, std::deque<thread_info>, Comparator> thread_queue;
-        for (auto idx = 0; idx < num_workers; ++idx)
-            thread_queue.emplace(std::make_pair(0, idx));
 
         // Process all jobs.
         for (const auto ptime: jobs) {
@@ -63,7 +62,10 @@ public:
     }
 
     JobQueue() = delete;
-    explicit JobQueue(size_t num_workers) : num_workers{num_workers} {}
+    explicit JobQueue(size_t num_workers) : num_workers{num_workers} {
+        for (auto idx = 0; idx < num_workers; ++idx)
+            thread_queue.emplace(std::make_pair(0, idx));
+    }
 };
 
 int main() {
