@@ -46,9 +46,11 @@ public:
     {}
 
     Response Process(const Request &request) {
-        // Process all tasks on the queue prior to requests.
+        // Determine when the processor will be available: if the queue is empty, it is
+        // available now; otherwise, when the last task in the queue has completed.
         const auto available = finish_time.empty() ? 0 : finish_time.back();
 
+        // Process all tasks on the queue that can be done prior to the arrival of the request and pop them.
         while (!finish_time.empty() && finish_time.front() <= request.arrival_time)
             finish_time.pop_front();
 
@@ -57,6 +59,7 @@ public:
             return Response{true, 0};
 
         // Otherwise, enqueue and return the starting time.
+        // This is the maximum of when the processor is available and when the task arrived.
         const auto start_time = std::max(available, request.arrival_time);
         finish_time.emplace_back(start_time + request.process_time);
         return Response{false, start_time};

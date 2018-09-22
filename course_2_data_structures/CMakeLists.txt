@@ -1,1 +1,2 @@
 add_subdirectory(week1_basic_data_structures)
+add_subdirectory(week3_priority_queues_and_disjoint_sets)
