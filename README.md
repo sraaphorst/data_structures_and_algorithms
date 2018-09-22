@@ -1,6 +1,6 @@
 # Coursera Data Structures and Algorithms Specialization course from UC San Diego:
 
-https://www.coursera.org/specializations/data-structures-algorithms
+Specialization webpage: https://www.coursera.org/specializations/data-structures-algorithms
 
 This is a six-part course offered by Coursera to specialize in advanced data structures and algorithms.
 
@@ -14,12 +14,15 @@ instead of the usual shebang.
 
 # Status
 
+Here is the status of my progression. May be slightly out of date.
+
 1. Course 1, Algorithmic Toolbox: <b>complete</b>
   * Course webpage: https://www.coursera.org/learn/algorithmic-toolbox
   * Course certificate of completion: https://www.coursera.org/account/accomplishments/certificate/2XRP4Y9U2NF8
 
 2 Course 2, Data Structures: <b>in progress</b>
   * Course webpage: https://www.coursera.org/learn/data-structures
+  * Test
   
 3 Course 3, Algorithms on Graphs
   * Course webpage: https://www.coursera.org/learn/algorithms-on-graphs
