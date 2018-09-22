@@ -14,10 +14,23 @@ instead of the usual shebang.
 
 # Status
 
-* Completed course 1, <i>Algorithmic Toolbox.</i>
+1. Course 1, Algorithmic Toolbox: <b>complete</b>
+  - Course webpage: https://www.coursera.org/learn/algorithmic-toolbox
+  - Course certificate of completion: https://www.coursera.org/account/accomplishments/certificate/2XRP4Y9U2NF8
 
-https://www.coursera.org/account/accomplishments/certificate/2XRP4Y9U2NF8
+* Course 2, Data Structures: <b>in progress</b>
+  - Course webpage: https://www.coursera.org/learn/data-structures
+  
+* Course 3, Algorithms on Graphs
+  - Course webpage: https://www.coursera.org/learn/algorithms-on-graphs
 
-* Currently working on week 3 of course 2, Data Structures.
+* Course 4, Algorithms on Strings
+  - Course webpage: https://www.coursera.org/learn/algorithms-on-strings
 
-https://www.coursera.org/learn/data-structures
+* Course 5, Advanced Algorithms and Complexity
+  - Course webpage: https://www.coursera.org/learn/advanced-algorithms-and-complexity
+
+* Course 6, Genome Assembly Project Challenge
+  - Course webpage: https://www.coursera.org/learn/assembling-genomes
+
+
