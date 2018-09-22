@@ -22,7 +22,7 @@ Here is the status of my progression. May be slightly out of date.
 
 2 Course 2, Data Structures: <b>in progress</b>
   * Course webpage: https://www.coursera.org/learn/data-structures
-  * Currently finishing week 3.
+  * Currently finishing week 4.
   
 3 Course 3, Algorithms on Graphs
   * Course webpage: https://www.coursera.org/learn/algorithms-on-graphs
